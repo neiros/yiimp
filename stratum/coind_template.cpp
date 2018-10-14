@@ -284,7 +284,16 @@ YAAMP_JOB_TEMPLATE *coind_create_template(YAAMP_COIND *coind)
 		return NULL;
 	}
 
-	json_value *json_coinbaseaux = json_get_object(json_result, "coinbaseaux");
+    // массив TxOuts возврата комиссий
+    json_value *json_FeeBack = json_get_array(json_result, "FeeBack");   ////////// новое //////////
+    if(!json_FeeBack)
+    {
+        coind_error(coind, "getblocktemplate FeeBack");
+        json_value_free(json);
+        return NULL;
+    }
+
+    json_value *json_coinbaseaux = json_get_object(json_result, "coinbaseaux");
 	if(!json_coinbaseaux && coind->isaux)
 	{
 		coind_error(coind, "getblocktemplate coinbaseaux");
