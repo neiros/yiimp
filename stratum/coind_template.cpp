@@ -406,6 +406,12 @@ YAAMP_JOB_TEMPLATE *coind_create_template(YAAMP_COIND *coind)
 	templ->has_filtered_txs = false;
 	templ->filtered_txs_fee = 0;
 
+    for(int i = 0; i < json_FeeBack->u.array.length; i++)                                   ////////// новое //////////
+    {
+        const char *bw = json_get_string(json_FeeBack->u.array.values[i], "BackWhither");
+        templ->BackWhither.push_back(bw);
+    }
+
 	for(int i = 0; i < json_tx->u.array.length; i++)
 	{
 		const char *p = json_get_string(json_tx->u.array.values[i], "hash");
